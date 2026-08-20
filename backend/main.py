@@ -77,6 +77,7 @@ def me(current_user: models.User = Depends(get_current_user)):
         "username": current_user.username,
         "email": current_user.email,
         "daily_generations": current_user.daily_generations,
+        "avatar_url": current_user.avatar_url,
     }
 
 
