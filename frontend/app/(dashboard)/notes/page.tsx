@@ -1,12 +1,30 @@
 "use client";
 import { EllipsisVertical, Layers, Plus, Search } from "lucide-react";
-import Image from "next/image";
-import Avatar from "@/assets/image/default_Avatar.png";
+import AvatarUpload from "@/components/Avatar";
 import CreateNote from "@/components/CreateNote";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import AvatarDisplay from "@/components/AvatarDisplay";
 
-export default function Dashboard() {
+export default function Notes() {
   const [showModal, setShowModal] = useState(false);
+  const [avatarUrl, setAvatarUrl] = useState("");
+
+  useEffect(() => {
+    async function fetchUser() {
+      const token = localStorage.getItem("access_token");
+
+      const response = await fetch("http://127.0.0.1:8000/me", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const data = await response.json();
+      setAvatarUrl(data.avatar_url);
+    }
+
+    fetchUser();
+  }, []);
 
   return (
     <div className="w-full bg-background h-full py-5 px-6 flex flex-col">
@@ -32,9 +50,7 @@ export default function Dashboard() {
             Add Note
             <Plus className="inline -translate-y-0.5" />
           </button>
-          <div className="w-12 h-12 border-2 border-primary rounded-full overflow-hidden">
-            <Image src={Avatar} alt="avatar" className="w-fit h-fit" />
-          </div>
+          <AvatarDisplay avatarUrl={avatarUrl} />
         </div>
       </nav>
       <section className="w-full flex-1 h-max px-6 py-8 flex flex-col overflow-hidden relative gap-5">
