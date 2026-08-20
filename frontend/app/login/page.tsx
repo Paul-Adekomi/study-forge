@@ -57,7 +57,7 @@ export default function LoginIn() {
   }
 
   return (
-    <div className="w-full h-screen bg-background flex items-center justify-center flex-col px-3 md:px-0">
+    <div className="w-full h-screen bg-background flex items-center justify-center flex-col px-3 md:px-0 overflow-hidden">
       <div className="bg-surface w-full md:w-140 h-150 p-5 flex items-center justify-center flex-col gap-2 rounded-2xl">
         <Link
           className="w-full h-max flex items-center justify-center flex-col"
