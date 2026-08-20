@@ -1,13 +1,15 @@
 "use client";
-import { EllipsisVertical, Layers, Plus, Search } from "lucide-react";
-import AvatarUpload from "@/components/Avatar";
+import { Plus, Search } from "lucide-react";
 import CreateNote from "@/components/CreateNote";
 import { useEffect, useState } from "react";
 import AvatarDisplay from "@/components/AvatarDisplay";
+import NoteCard from "@/components/NoteCard";
+import type { Note } from "@/components/NoteCard";
 
 export default function Notes() {
   const [showModal, setShowModal] = useState(false);
   const [avatarUrl, setAvatarUrl] = useState("");
+  const [notes, setNotes] = useState<Note[]>([]);
 
   useEffect(() => {
     async function fetchUser() {
@@ -21,6 +23,15 @@ export default function Notes() {
 
       const data = await response.json();
       setAvatarUrl(data.avatar_url);
+
+      const notesResponse = await fetch("http://127.0.0.1:8000/notes", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const noteData = await notesResponse.json();
+      setNotes(noteData);
     }
 
     fetchUser();
@@ -61,240 +72,20 @@ export default function Notes() {
           </p>
         </div>
         <div className="notes_container w-full h-full flex-1 flex flex-wrap items-start justify-start overscroll-none overflow-y-auto py-3 gap-5 relative z-20">
-          <div className="note border border-primary/50 rounded-xl bg-surface w-70 h-65 px-5 py-4 flex items-center justify-center flex-col cursor-pointer hover:border-primary/90">
-            <div className="w-full flex flex-col gap-2 h-[85%]">
-              <div className="w-full flex items-center justify-between pl-0">
-                <h3 className="font-heading text-4xl truncate line-clamp-2 text-wrap w-full hover:text-primary ">
-                  Cellular Respiration Details
-                </h3>
-                <EllipsisVertical
-                  size={35}
-                  className="text-muted w-max self-start pt-2 font-bold"
-                />
-              </div>
-              <div className="w-full">
-                <p className="text-muted line-clamp-3 w-full text-wrap">
-                  Overview of glycolysis, Krebs cycle, and electron transport
-                  chain. Key enzymes and ATP yield calculations for eukaryotic
-                  cells.
-                </p>
-              </div>
-            </div>
-
-            <div className="flex w-full h-[15%] border-t border-primary/50 items-center justify-between pt-2">
-              <span className="text-muted text-sm">Edited 2h ago</span>
-              <span className="w-max border border-primary/50 rounded-2xl flex items-center justify-center gap-2 px-2 font-heading text-primary text-sm">
-                <Layers className="inline" size={16} />
-                <span>24 Cards</span>
-              </span>
-            </div>
-          </div>
-
-          <div className="note border border-primary/50 rounded-xl bg-surface w-70 h-65 px-5 py-4 flex items-center justify-center flex-col cursor-pointer hover:border-primary/90">
-            <div className="w-full flex flex-col gap-2 h-[85%]">
-              <div className="w-full flex items-center justify-between pl-0">
-                <h3 className="font-heading text-4xl truncate line-clamp-2 text-wrap w-full hover:text-primary ">
-                  Modern European History
-                </h3>
-                <EllipsisVertical
-                  size={35}
-                  className="text-muted w-max self-start pt-2 font-bold"
-                />
-              </div>
-              <div className="w-full">
-                <p className="text-muted line-clamp-3 w-full text-wrap">
-                  Causes and consequences of the French Revolution. Impact on
-                  neighboring monarchies and the rise of Napoleon Bonaparte.
-                </p>
-              </div>
-            </div>
-
-            <div className="flex w-full h-[15%] border-t border-primary/50 items-center justify-between pt-2">
-              <span className="text-muted text-sm">Edited yesterday</span>
-              <span className="w-max border border-primary/50 rounded-2xl flex items-center justify-center gap-2 px-2 font-heading text-primary text-sm">
-                <Layers className="inline" size={16} />
-                <span>52 Cards</span>
-              </span>
-            </div>
-          </div>
-
-          <div className="note border border-primary/50 rounded-xl bg-surface w-70 h-65 px-5 py-4 flex items-center justify-center flex-col cursor-pointer hover:border-primary/90">
-            <div className="w-full flex flex-col gap-2 h-[85%]">
-              <div className="w-full flex items-center justify-between pl-0">
-                <h3 className="font-heading text-4xl truncate line-clamp-2 text-wrap w-full hover:text-primary ">
-                  Advanced Calculus: Integration Techniques
-                </h3>
-                <EllipsisVertical
-                  size={35}
-                  className="text-muted w-max self-start pt-2 font-bold"
-                />
-              </div>
-              <div className="w-full">
-                <p className="text-muted line-clamp-3 w-full text-wrap">
-                  Integration by parts, partial fractions, and trigonometric
-                  substitution. Includes practice problems and step-by-step
-                  solutions for final exam review.
-                </p>
-              </div>
-            </div>
-
-            <div className="flex w-full h-[15%] border-t border-primary/50 items-center justify-between pt-2">
-              <span className="text-muted text-sm">Edited 3 days ago</span>
-              <span className="w-max border border-primary/50 rounded-2xl flex items-center justify-center gap-2 px-2 font-heading text-primary text-sm">
-                <Layers className="inline" size={16} />
-                <span>Generate Flashcards</span>
-              </span>
-            </div>
-          </div>
-
-          <div className="note border border-primary/50 rounded-xl bg-surface w-70 h-65 px-5 py-4 flex items-center justify-center flex-col cursor-pointer hover:border-primary/90">
-            <div className="w-full flex flex-col gap-2 h-[85%]">
-              <div className="w-full flex items-center justify-between pl-0">
-                <h3 className="font-heading text-4xl truncate line-clamp-2 text-wrap w-full hover:text-primary ">
-                  Introduction to Psychology
-                </h3>
-                <EllipsisVertical
-                  size={35}
-                  className="text-muted w-max self-start pt-2 font-bold"
-                />
-              </div>
-              <div className="w-full">
-                <p className="text-muted line-clamp-3 w-full text-wrap">
-                  Freudian theories vs. behaviorism. Classical and operant
-                  conditioning examples.
-                </p>
-              </div>
-            </div>
-
-            <div className="flex w-full h-[15%] border-t border-primary/50 items-center justify-between pt-2">
-              <span className="text-muted text-sm">Edited 1w ago</span>
-              <span className="w-max border border-primary/50 rounded-2xl flex items-center justify-center gap-2 px-2 font-heading text-primary text-sm">
-                <Layers className="inline" size={16} />
-                <span>18 Cards</span>
-              </span>
-            </div>
-          </div>
-
-          <div className="note border border-primary/50 rounded-xl bg-surface w-70 h-65 px-5 py-4 flex items-center justify-center flex-col cursor-pointer hover:border-primary/90">
-            <div className="w-full flex flex-col gap-2 h-[85%]">
-              <div className="w-full flex items-center justify-between pl-0">
-                <h3 className="font-heading text-4xl truncate line-clamp-2 text-wrap w-full hover:text-primary ">
-                  Cellular Respiration Details
-                </h3>
-                <EllipsisVertical
-                  size={35}
-                  className="text-muted w-max self-start pt-2 font-bold"
-                />
-              </div>
-              <div className="w-full">
-                <p className="text-muted line-clamp-3 w-full text-wrap">
-                  Overview of glycolysis, Krebs cycle, and electron transport
-                  chain. Key enzymes and ATP yield calculations for eukaryotic
-                  cells.
-                </p>
-              </div>
-            </div>
-
-            <div className="flex w-full h-[15%] border-t border-primary/50 items-center justify-between pt-2">
-              <span className="text-muted text-sm">Edited 2h ago</span>
-              <span className="w-max border border-primary/50 rounded-2xl flex items-center justify-center gap-2 px-2 font-heading text-primary text-sm">
-                <Layers className="inline" size={16} />
-                <span>24 Cards</span>
-              </span>
-            </div>
-          </div>
-
-          <div className="note border border-primary/50 rounded-xl bg-surface w-70 h-65 px-5 py-4 flex items-center justify-center flex-col cursor-pointer hover:border-primary/90">
-            <div className="w-full flex flex-col gap-2 h-[85%]">
-              <div className="w-full flex items-center justify-between pl-0">
-                <h3 className="font-heading text-4xl truncate line-clamp-2 text-wrap w-full hover:text-primary ">
-                  Cellular Respiration Details
-                </h3>
-                <EllipsisVertical
-                  size={35}
-                  className="text-muted w-max self-start pt-2 font-bold"
-                />
-              </div>
-              <div className="w-full">
-                <p className="text-muted line-clamp-3 w-full text-wrap">
-                  Overview of glycolysis, Krebs cycle, and electron transport
-                  chain. Key enzymes and ATP yield calculations for eukaryotic
-                  cells.
-                </p>
-              </div>
-            </div>
-
-            <div className="flex w-full h-[15%] border-t border-primary/50 items-center justify-between pt-2">
-              <span className="text-muted text-sm">Edited 2h ago</span>
-              <span className="w-max border border-primary/50 rounded-2xl flex items-center justify-center gap-2 px-2 font-heading text-primary text-sm">
-                <Layers className="inline" size={16} />
-                <span>24 Cards</span>
-              </span>
-            </div>
-          </div>
-
-          <div className="note border border-primary/50 rounded-xl bg-surface w-70 h-65 px-5 py-4 flex items-center justify-center flex-col cursor-pointer hover:border-primary/90">
-            <div className="w-full flex flex-col gap-2 h-[85%]">
-              <div className="w-full flex items-center justify-between pl-0">
-                <h3 className="font-heading text-4xl truncate line-clamp-2 text-wrap w-full hover:text-primary ">
-                  Cellular Respiration Details
-                </h3>
-                <EllipsisVertical
-                  size={35}
-                  className="text-muted w-max self-start pt-2 font-bold"
-                />
-              </div>
-              <div className="w-full">
-                <p className="text-muted line-clamp-3 w-full text-wrap">
-                  Overview of glycolysis, Krebs cycle, and electron transport
-                  chain. Key enzymes and ATP yield calculations for eukaryotic
-                  cells.
-                </p>
-              </div>
-            </div>
-
-            <div className="flex w-full h-[15%] border-t border-primary/50 items-center justify-between pt-2">
-              <span className="text-muted text-sm">Edited 2h ago</span>
-              <span className="w-max border border-primary/50 rounded-2xl flex items-center justify-center gap-2 px-2 font-heading text-primary text-sm">
-                <Layers className="inline" size={16} />
-                <span>24 Cards</span>
-              </span>
-            </div>
-          </div>
-
-          <div className="note border border-primary/50 rounded-xl bg-surface w-70 h-65 px-5 py-4 flex items-center justify-center flex-col cursor-pointer hover:border-primary/90">
-            <div className="w-full flex flex-col gap-2 h-[85%]">
-              <div className="w-full flex items-center justify-between pl-0">
-                <h3 className="font-heading text-4xl truncate line-clamp-2 text-wrap w-full hover:text-primary ">
-                  Cellular Respiration Details
-                </h3>
-                <EllipsisVertical
-                  size={35}
-                  className="text-muted w-max self-start pt-2 font-bold"
-                />
-              </div>
-              <div className="w-full">
-                <p className="text-muted line-clamp-3 w-full text-wrap">
-                  Overview of glycolysis, Krebs cycle, and electron transport
-                  chain. Key enzymes and ATP yield calculations for eukaryotic
-                  cells.
-                </p>
-              </div>
-            </div>
-
-            <div className="flex w-full h-[15%] border-t border-primary/50 items-center justify-between pt-2">
-              <span className="text-muted text-sm">Edited 2h ago</span>
-              <span className="w-max border border-primary/50 rounded-2xl flex items-center justify-center gap-2 px-2 font-heading text-primary text-sm">
-                <Layers className="inline" size={16} />
-                <span>24 Cards</span>
-              </span>
-            </div>
-          </div>
+          {notes.map((note) => (
+            <NoteCard key={note.id} note={note} />
+          ))}
         </div>
         <div className="fade"></div>
       </section>
       {showModal && (
-        <CreateNote showModal={showModal} setShowModal={setShowModal} />
+        <CreateNote
+          showModal={showModal}
+          setShowModal={setShowModal}
+          onNoteCreated={(newNote: Note) => {
+            setNotes((previousNotes) => [...previousNotes, newNote]);
+          }}
+        />
       )}
     </div>
   );

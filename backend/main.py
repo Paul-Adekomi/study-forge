@@ -88,13 +88,23 @@ def create_note(
     current_user: models.User = Depends(get_current_user),
 ):
     new_note = models.Note(
-        title=note.title, content=note.content, owner_id=current_user.id
+        title=note.title,
+        content=note.content,
+        owner_id=current_user.id,
+        id=note.id,
+        created_at=note.created_at,
     )
     db.add(new_note)
     db.commit()
     db.refresh(new_note)
 
-    return {"id": new_note.id, "title": new_note.title, "content": new_note.content}
+    return {
+        "id": new_note.id,
+        "title": new_note.title,
+        "content": new_note.content,
+        "created_at": new_note.created_at,
+        "owner_id": new_note.owner_id,
+    }
 
 
 @app.get("/notes")
