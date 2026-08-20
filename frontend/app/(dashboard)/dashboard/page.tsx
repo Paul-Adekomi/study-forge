@@ -52,7 +52,10 @@ export default function page() {
             Ready to pick up where you left off?{" "}
           </span>
         </h2>
-        <AvatarUpload currentAvatarUrl={avatarUrl} />
+        <AvatarUpload
+          currentAvatarUrl={avatarUrl}
+          onAvatarChange={setAvatarUrl}
+        />
       </div>
 
       <div className="w-full h-50 flex items-center justify-between px-5 gap-5">

@@ -7,10 +7,11 @@ import Avatar from "@/assets/image/default_Avatar.png";
 
 export default function AvatarUpload({
   currentAvatarUrl,
+  onAvatarChange,
 }: {
   currentAvatarUrl?: string;
+  onAvatarChange: (url: string) => void;
 }) {
-  const [avatarUrl, setAvatarUrl] = useState(currentAvatarUrl || "");
   const [uploading, setUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -25,6 +26,7 @@ export default function AvatarUpload({
     setUploading(true);
 
     const token = localStorage.getItem("access_token");
+
     const formData = new FormData();
     formData.append("file", file);
 
@@ -38,7 +40,8 @@ export default function AvatarUpload({
       });
 
       const data = await response.json();
-      setAvatarUrl(data.avatar_url);
+
+      onAvatarChange(data.avatar_url);
     } catch (err) {
       console.error("Avatar upload failed", err);
     } finally {
@@ -52,15 +55,17 @@ export default function AvatarUpload({
       onClick={handleFileSelect}
     >
       <Image
-        src={avatarUrl || Avatar}
+        src={currentAvatarUrl || Avatar}
         alt="avatar"
         width={48}
         height={48}
         className="w-full h-full object-cover"
       />
+
       <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
         <Camera size={16} className="text-white" />
       </div>
+
       <input
         type="file"
         ref={fileInputRef}
