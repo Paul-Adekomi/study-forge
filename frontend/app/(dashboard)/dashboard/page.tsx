@@ -1,6 +1,7 @@
 "use client";
 
 import Avatar from "@/assets/image/default_Avatar.png";
+import AvatarUpload from "@/components/Avatar";
 import {
   CalendarDaysIcon,
   EllipsisVertical,
@@ -18,6 +19,7 @@ export default function page() {
   const [username, setUsername] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [dailyGenerations, setDailyGenerations] = useState(0);
+  const [avatarUrl, setAvatarUrl] = useState("");
   useEffect(() => {
     const token = localStorage.getItem("access_token");
 
@@ -36,6 +38,7 @@ export default function page() {
       setUsername(data.username);
       setUserEmail(data.email);
       setDailyGenerations(data.daily_generations);
+      setAvatarUrl(data.avatar_url);
     }
 
     fetchUser();
@@ -50,9 +53,7 @@ export default function page() {
             Ready to pick up where you left off?{" "}
           </span>
         </h2>
-        <div className="w-12 h-12 border-2 border-primary rounded-full overflow-hidden">
-          <Image src={Avatar} alt="avatar" className="w-fit h-fit" />
-        </div>
+        <AvatarUpload currentAvatarUrl={avatarUrl} />
       </div>
 
       <div className="w-full h-50 flex items-center justify-between px-5 gap-5">
