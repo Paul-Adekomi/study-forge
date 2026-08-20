@@ -1,0 +1,71 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background: #0f0f12;
+  --color-surface: #1a1a1f;
+  --color-text: #f5f5f5;
+  --color-muted: #9a9aa5;
+  --color-primary: #f5a623;
+  --color-primary-hover: #d98a0f;
+
+  --font-heading: var(--font-heading);
+  --font-body: var(--font-body);
+}
+
+.light {
+  --color-background: #fafaf9;
+  --color-surface: #ffffff;
+  --color-text: #1a1a1f;
+  --color-muted: #6b6b75;
+  --color-primary: #d98a0f;
+}
+
+body {
+  background: var(--color-background);
+  color: var(--color-text);
+  font-family: var(--font-body);
+}
+
+.btn {
+  @apply bg-primary px-5 py-3 text-background cursor-pointer rounded-md transition-all duration-100 font-heading inline-block;
+  box-shadow: 0 2px 20px 2px #d98c0fdc;
+}
+
+.btn:hover {
+  @apply bg-primary-hover;
+}
+
+.card {
+  @apply md:w-100 w-[95%] h-55 border border-primary py-8 px-8 flex items-start justify-center flex-col gap-2 rounded-md bg-surface;
+}
+
+.card > span {
+  @apply w-max h-max p-2 bg-primary/20 rounded-md;
+}
+
+.circle {
+  @apply w-20 h-20 rounded-full border-2 border-primary flex items-center justify-center text-[2rem] font-heading text-primary;
+}
+
+.menu_item {
+  @apply w-[90%] px-5 py-3 flex items-center gap-3 rounded-md text-muted transition-all duration-300;
+}
+
+.menu_item:hover,
+.menu_item.active {
+  @apply flex items-center justify-start gap-4 bg-primary/10 text-primary w-[90%] px-6 py-3 rounded-tr-lg rounded-br-lg border-r-2 border-primary;
+}
+.fade {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100px;
+  background: linear-gradient(
+    to top,
+    var(--color-background) 0%,
+    transparent 100%
+  );
+  pointer-events: none;
+  z-index: 30;
+}

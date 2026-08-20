@@ -1,0 +1,9 @@
+<svg width="48" height="48" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+  <!-- Stacked flashcard shape with a spark/forge accent -->
+  <rect x="10" y="16" width="24" height="18" rx="4" fill="none" stroke="#9A9AA5" stroke-width="2.5"/>
+  <rect x="14" y="11" width="24" height="18" rx="4" fill="none" stroke="#9A9AA5" stroke-width="2.5" stroke-opacity="0.5"/>
+  <path
+    d="M24 6L25.6 10.4L30 12L25.6 13.6L24 18L22.4 13.6L18 12L22.4 10.4L24 6Z"
+    fill="#9A9AA5"
+  />
+</svg>
