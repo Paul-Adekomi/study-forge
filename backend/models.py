@@ -12,6 +12,7 @@ class User(Base):
     hashed_password = Column(String)
     created_at = Column(DateTime, default=datetime.utcnow)
     daily_generations = Column(Integer, default=0)
+    avatar_url = Column(String, nullable=True)
 
 
 class Note(Base):

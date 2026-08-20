@@ -2,6 +2,7 @@ from fastapi import FastAPI, Depends, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 
+
 from database import engine, Base, get_db
 from schemas import UserCreate, UserLogin, NoteCreate, FlashCard, FlashCardResponse
 from auth_utils import (
@@ -208,3 +209,28 @@ async def generate_flashcards(
     db.commit()
 
     return result
+
+
+import cloudinary
+import cloudinary.uploader
+from fastapi import UploadFile, File
+
+cloudinary.config(
+    cloud_name=os.getenv("CLOUDINARY_CLOUD_NAME"),
+    api_key=os.getenv("CLOUDINARY_API_KEY"),
+    api_secret=os.getenv("CLOUDINARY_API_SECRET"),
+)
+
+
+@app.post("/avatar")
+async def upload_avatar(
+    file: UploadFile = File(...),
+    db: Session = Depends(get_db),
+    current_user: models.User = Depends(get_current_user),
+):
+    result = cloudinary.uploader.upload(file.file)
+    current_user.avatar_url = result["secure_url"]
+    db.commit()
+    db.refresh(current_user)
+
+    return {"avatar_url": current_user.avatar_url}
