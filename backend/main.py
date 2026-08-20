@@ -222,7 +222,7 @@ cloudinary.config(
 )
 
 
-@app.post("/avatar")
+@app.post("/me/avatar")
 async def upload_avatar(
     file: UploadFile = File(...),
     db: Session = Depends(get_db),
