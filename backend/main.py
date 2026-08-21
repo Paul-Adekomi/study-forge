@@ -91,9 +91,8 @@ def create_note(
         title=note.title,
         content=note.content,
         owner_id=current_user.id,
-        id=note.id,
-        created_at=note.created_at,
     )
+
     db.add(new_note)
     db.commit()
     db.refresh(new_note)

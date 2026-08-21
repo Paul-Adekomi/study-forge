@@ -31,12 +31,12 @@ export default function Notes() {
       });
 
       const noteData = await notesResponse.json();
+
       setNotes(noteData);
     }
 
     fetchUser();
   }, []);
-
   return (
     <div className="w-full bg-background h-full py-5 px-6 flex flex-col">
       <nav className="w-full h-max py-3 flex items-center justify-between">
