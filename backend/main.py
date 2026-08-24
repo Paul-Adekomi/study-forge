@@ -54,7 +54,14 @@ def signup(user: UserCreate, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(new_user)
 
-    return {"message": "User created successfully", "username": new_user.username}
+    token = create_access_token({"sub": new_user.username})
+
+    return {
+        "message": "User created successfully",
+        "username": new_user.username,
+        "access_token": token,
+        "token_type": "bearer",
+    }
 
 
 @app.post("/login")
