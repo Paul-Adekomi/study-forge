@@ -15,7 +15,17 @@ export default function NotePage({
 }: NotePageProps) {
   const [showModal, setShowModal] = useState(false);
 
-  function handleGenerateFlashcards() {}
+  const [flashcards, setFlashcards] = useState(false);
+  const [isGenerating, setIsGenerating] = useState(false);
+
+  async function handleGenerateFlashcards() {
+    try {
+      const response = await fetch("/notes/{note_id}/generate-flashcards", {
+        method: "POST",
+        headers: { "Content-type": "application/json" },
+      });
+    } catch {}
+  }
   return (
     <div className="w-full absolute left-0 top-0 h-full bg-surface z-50 px-8 py-10 flex flex-col items-start justify-center gap-6">
       <div className="w-full flex items-center justify-between">
