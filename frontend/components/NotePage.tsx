@@ -1,4 +1,4 @@
-import { Pencil, X } from "lucide-react";
+import { Pencil, Sparkles, X } from "lucide-react";
 import { Note } from "./NoteCard";
 import EditNote from "./EditNote";
 import { useState } from "react";
@@ -14,6 +14,8 @@ export default function NotePage({
   onNoteUpdated,
 }: NotePageProps) {
   const [showModal, setShowModal] = useState(false);
+
+  function handleGenerateFlashcards() {}
   return (
     <div className="w-full absolute left-0 top-0 h-full bg-surface z-50 px-8 py-10 flex flex-col items-start justify-center gap-6">
       <div className="w-full flex items-center justify-between">
@@ -33,7 +35,14 @@ export default function NotePage({
           </button>
         </div>
       </div>
-      <div className="content w-full h-[80%]">{note.content}</div>
+      <div className="content w-full h-[80%] overflow-hidden overflow-y-auto py-3 px-6">
+        {note.content}
+      </div>
+      <div className="w-full h-[10%] flex items-center justify-end">
+        <button className="btn" onClick={handleGenerateFlashcards}>
+          <Sparkles className="inline" size={16} /> Generate Flashcards
+        </button>
+      </div>
       {showModal && (
         <EditNote
           note={note}

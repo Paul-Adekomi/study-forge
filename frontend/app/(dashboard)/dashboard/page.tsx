@@ -1,15 +1,7 @@
 "use client";
 
-import Avatar from "@/assets/image/default_Avatar.png";
 import AvatarUpload from "@/components/Avatar";
-import {
-  CalendarDaysIcon,
-  EllipsisVertical,
-  Flame,
-  Layers,
-  Notebook,
-  Zap,
-} from "lucide-react";
+import { CalendarDaysIcon, Flame, Layers, Notebook, Zap } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
