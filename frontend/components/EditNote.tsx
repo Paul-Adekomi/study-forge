@@ -1,34 +1,40 @@
 import { NotebookPen, Save, X } from "lucide-react";
 import { useState } from "react";
+import { Note } from "./NoteCard";
 
-export default function CreateNote({
+type EditNoteProps = {
+  note: Note;
+  showModal: boolean;
+  setShowModal: (value: boolean) => void;
+  onNoteUpdated: (updatedNote: Note) => void;
+};
+
+export default function EditNote({
+  note,
   showModal,
   setShowModal,
-  onNoteCreated,
-}: any) {
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
+  onNoteUpdated,
+}: EditNoteProps) {
+  const [title, setTitle] = useState(note.title);
+  const [content, setContent] = useState(note.content);
   const [saving, setSaving] = useState(false);
 
-  async function handleCreateNote() {
+  async function handleUpdateNote() {
     if (!title.trim() || !content.trim()) {
       return;
     }
 
     const token = localStorage.getItem("access_token");
-
     setSaving(true);
+
     try {
-      const response = await fetch("http://127.0.0.1:8000/notes", {
-        method: "POST",
+      const response = await fetch(`http://127.0.0.1:8000/notes/${note.id}`, {
+        method: "PUT",
         headers: {
           "Content-type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({
-          title,
-          content,
-        }),
+        body: JSON.stringify({ title, content }),
       });
 
       const data = await response.json();
@@ -38,16 +44,10 @@ export default function CreateNote({
         return;
       }
 
-      console.log("Notes created successfully", data);
-
-      onNoteCreated(data);
-
-      setTitle("");
-      setContent("");
+      onNoteUpdated(data);
       setShowModal(false);
     } catch (err) {
-      console.error(err);
-      console.log("Failed to create note", err);
+      console.error("Failed to update note", err);
     } finally {
       setSaving(false);
     }
@@ -58,7 +58,7 @@ export default function CreateNote({
         <div className="border-b border-primary/50 h-[10%] px-5 py-2 flex items-center justify-between">
           <span className="flex items-center justify-center gap-2">
             <NotebookPen className="inline text-primary" />
-            <span className="text-xl font-heading">Create New Note</span>
+            <span className="text-xl font-heading">Edit Note</span>
           </span>
           <button
             onClick={() => setShowModal(!showModal)}
@@ -100,7 +100,7 @@ export default function CreateNote({
           </button>
           <button
             className="bg-primary px-5 py-1.5 text-background cursor-pointer rounded-md transition-all duration-100 font-heading inline-block hover:bg-primary-hover"
-            onClick={handleCreateNote}
+            onClick={handleUpdateNote}
           >
             <Save size={15} className="inline -translate-y-0.5" />{" "}
             {saving ? "Saving..." : "Save"}

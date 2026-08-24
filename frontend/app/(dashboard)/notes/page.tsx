@@ -5,11 +5,22 @@ import { useEffect, useState } from "react";
 import AvatarDisplay from "@/components/AvatarDisplay";
 import NoteCard from "@/components/NoteCard";
 import type { Note } from "@/components/NoteCard";
+import NotePage from "@/components/NotePage";
 
 export default function Notes() {
   const [showModal, setShowModal] = useState(false);
   const [avatarUrl, setAvatarUrl] = useState("");
   const [notes, setNotes] = useState<Note[]>([]);
+
+  const [selectedNote, setSelectedNote] = useState<Note | null>(null);
+
+  function handleNoteUpdated(updatedNote: Note) {
+    setNotes((currentNotes) =>
+      currentNotes.map((n) => (n.id === updatedNote.id ? updatedNote : n)),
+    );
+
+    setSelectedNote(updatedNote);
+  }
 
   useEffect(() => {
     async function fetchUser() {
@@ -31,14 +42,45 @@ export default function Notes() {
       });
 
       const noteData = await notesResponse.json();
+      console.log("status:", notesResponse.status);
+      console.log("noteData:", noteData);
 
-      setNotes(noteData);
+      if (Array.isArray(noteData)) {
+        setNotes(noteData);
+      } else {
+        setNotes([]);
+      }
     }
 
     fetchUser();
   }, []);
+
+  async function handleDeleteNote(noteId: number) {
+    const token = localStorage.getItem("access_token");
+
+    try {
+      const response = await fetch(`http://127.0.0.1:8000/notes/${noteId}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        console.log("Failed to delete note");
+        return;
+      }
+
+      setNotes((currentNotes) =>
+        currentNotes.filter((note) => note.id !== noteId),
+      );
+    } catch (err) {
+      console.error("Delete failed", err);
+    }
+  }
+
   return (
-    <div className="w-full bg-background h-full py-5 px-6 flex flex-col">
+    <div className="w-full bg-background h-full py-5 px-6 flex flex-col relative">
       <nav className="w-full h-max py-3 flex items-center justify-between">
         <div className="search_bar flex items-center justify-start gap-2 w-[70%] h-12 px-3 border border-primary/50 bg-surface rounded-4xl">
           <span
@@ -73,7 +115,12 @@ export default function Notes() {
         </div>
         <div className="notes_container w-full h-full flex-1 flex flex-wrap items-start justify-start overscroll-none overflow-y-auto py-3 gap-5 relative z-20">
           {notes.map((note) => (
-            <NoteCard key={note.id} note={note} />
+            <NoteCard
+              key={note.id}
+              note={note}
+              onDelete={handleDeleteNote}
+              onSelect={setSelectedNote}
+            />
           ))}
         </div>
         <div className="fade"></div>
@@ -85,6 +132,13 @@ export default function Notes() {
           onNoteCreated={(newNote: Note) => {
             setNotes((previousNotes) => [...previousNotes, newNote]);
           }}
+        />
+      )}
+      {selectedNote && (
+        <NotePage
+          note={selectedNote}
+          onClose={() => setSelectedNote(null)}
+          onNoteUpdated={handleNoteUpdated}
         />
       )}
     </div>

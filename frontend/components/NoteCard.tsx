@@ -1,5 +1,5 @@
 import { EllipsisVertical, Layers, Pencil, Trash2 } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 export type Note = {
   id: number;
@@ -11,13 +11,16 @@ export type Note = {
 
 type NoteCardProps = {
   note: Note;
+  onDelete: (noteId: number) => void;
+  onSelect: (note: Note) => void;
 };
 
-export default function NoteCard({ note }: NoteCardProps) {
+export default function NoteCard({ note, onDelete, onSelect }: NoteCardProps) {
   const [visibility, setVisibility] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
-  const handleNoteMenu = () => {
+  const handleNoteMenu = (e: React.MouseEvent) => {
+    e.stopPropagation();
     setVisibility(!visibility);
   };
 
@@ -36,7 +39,7 @@ export default function NoteCard({ note }: NoteCardProps) {
   }, []);
 
   function formatDate(date: string) {
-    const noteDate = new Date(date);
+    const noteDate = new Date(date.endsWith("Z") ? date : date + "Z");
     const now = new Date();
 
     const diff = now.getTime() - noteDate.getTime();
@@ -53,7 +56,10 @@ export default function NoteCard({ note }: NoteCardProps) {
   }
   return (
     <div className="note group border border-primary/50 rounded-xl bg-surface w-75 h-65 px-5 py-4 flex items-center justify-center flex-col cursor-pointer hover:border-primary/90 relative">
-      <div className="w-full flex flex-col gap-2 h-[85%]">
+      <div
+        className="w-full flex flex-col gap-2 h-[85%]"
+        onClick={() => onSelect(note)}
+      >
         <div className="w-full flex items-center justify-between pl-0">
           <h3 className="font-heading text-2xl truncate line-clamp-2 text-wrap w-full group-hover:text-primary ">
             {note.title}
@@ -88,10 +94,10 @@ export default function NoteCard({ note }: NoteCardProps) {
           style={{ boxShadow: "0px 2px 10px 0px #ffffff35" }}
           ref={menuRef}
         >
-          <button className="w-full px-2 py-1 text-center cursor-pointer hover:bg-primary hover:text-background">
-            Update <Pencil size={16} className="inline" />
-          </button>
-          <button className="w-full px-2 py-1 text-center cursor-pointer hover:bg-red-500 hover:text-background">
+          <button
+            className="w-full px-2 py-1 text-center cursor-pointer hover:bg-red-500 hover:text-background"
+            onClick={() => onDelete(note.id)}
+          >
             Delete <Trash2 size={16} className="inline" />
           </button>
         </div>
