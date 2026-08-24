@@ -71,7 +71,7 @@ export default function DashboardLayout({
           </Link>
 
           <Link
-            href="/"
+            href="/flashcards"
             className={`menu_item ${
               pathname === "/flashcards" ? "active" : ""
             }`}
