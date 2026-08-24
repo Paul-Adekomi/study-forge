@@ -7,6 +7,7 @@ export type Note = {
   content: string;
   owner_id: number;
   created_at: string;
+  updated_at: string;
 };
 
 type NoteCardProps = {
@@ -38,7 +39,9 @@ export default function NoteCard({ note, onDelete, onSelect }: NoteCardProps) {
     };
   }, []);
 
-  function formatDate(date: string) {
+  function formatDate(date?: string) {
+    if (!date) return "No date";
+
     const noteDate = new Date(date.endsWith("Z") ? date : date + "Z");
     const now = new Date();
 
@@ -80,7 +83,7 @@ export default function NoteCard({ note, onDelete, onSelect }: NoteCardProps) {
 
       <div className="flex w-full h-[15%] border-t border-primary/50 items-center justify-between pt-2">
         <span className="text-muted text-sm">
-          {formatDate(note.created_at)}
+          {formatDate(note.updated_at)}
         </span>
         <span className="w-max border border-primary/50 rounded-2xl flex items-center justify-center gap-2 px-2 py-1.5 font-heading text-primary text-sm">
           <Layers className="inline" size={16} />

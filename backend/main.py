@@ -103,6 +103,7 @@ def create_note(
         "content": new_note.content,
         "created_at": new_note.created_at,
         "owner_id": new_note.owner_id,
+        "updated_at": new_note.updated_at,
     }
 
 

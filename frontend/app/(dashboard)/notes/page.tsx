@@ -114,14 +114,28 @@ export default function Notes() {
           </p>
         </div>
         <div className="notes_container w-full h-full flex-1 flex flex-wrap items-start justify-start overscroll-none overflow-y-auto py-3 gap-5 relative z-20">
-          {notes.map((note) => (
-            <NoteCard
-              key={note.id}
-              note={note}
-              onDelete={handleDeleteNote}
-              onSelect={setSelectedNote}
-            />
-          ))}
+          {notes.length === 0 ? (
+            <div className="w-full h-full flex flex-col items-center justify-center">
+              <p className="text-muted mb-4">You don't have any notes yet.</p>
+
+              <button
+                className="btn flex items-center justify-center"
+                onClick={() => setShowModal(true)}
+              >
+                Add a new note
+                <Plus className="inline ml-2" size={18} />
+              </button>
+            </div>
+          ) : (
+            notes.map((note) => (
+              <NoteCard
+                key={note.id}
+                note={note}
+                onDelete={handleDeleteNote}
+                onSelect={setSelectedNote}
+              />
+            ))
+          )}
         </div>
         <div className="fade"></div>
       </section>
