@@ -11,11 +11,9 @@ export default function FlashcardsPage() {
 
   useEffect(() => {
     async function loadFlashcards() {
-      // Check if flashcards were passed from the generator
       const cached = localStorage.getItem("generated_flashcards");
       if (cached) {
         setFlashcards(JSON.parse(cached));
-        // Clear cached flashcards so subsequent visits fetch fresh data
         localStorage.removeItem("generated_flashcards");
         setLoading(false);
         return;
