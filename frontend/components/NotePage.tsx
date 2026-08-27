@@ -69,40 +69,53 @@ export default function NotePage({
   }
 
   return (
-    <div className="w-full absolute left-0 top-0 h-full bg-surface z-50 px-8 py-10 flex flex-col items-start justify-center gap-6">
-      <div className="w-full flex items-center justify-between">
-        <h1 className="text-6xl font-heading">{note.title}</h1>
-        <div className="w-max h-max flex items-center justify-center gap-10">
-          <button className="btn" onClick={() => setShowModal(!showModal)}>
-            Edit Note <Pencil className="inline" size={16} />
+    <div className="fixed inset-0 w-full h-screen bg-surface z-50 px-4 sm:px-8 py-6 sm:py-10 flex flex-col items-start justify-between gap-4 sm:gap-6 overflow-hidden">
+      {/* Header Bar */}
+      <div className="w-full flex flex-col-reverse sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-primary/20 pb-4">
+        <h1 className="text-2xl sm:text-4xl lg:text-5xl font-heading text-text break-words line-clamp-2 pr-2">
+          {note.title}
+        </h1>
+        <div className="w-full sm:w-auto flex items-center justify-between sm:justify-end gap-3 sm:gap-6">
+          <button
+            className="btn flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 text-sm sm:text-base"
+            onClick={() => setShowModal(!showModal)}
+          >
+            <span>Edit Note</span>
+            <Pencil className="inline" size={16} />
           </button>
           <button
             onClick={onClose}
-            className="text-muted hover:text-primary cursor-pointer"
+            className="text-muted hover:text-primary cursor-pointer p-1"
+            aria-label="Close note"
           >
             <X size={24} />
           </button>
         </div>
       </div>
 
-      <div className="content w-full h-[80%] overflow-hidden overflow-y-auto py-3 px-6">
+      {/* Content Area */}
+      <div className="content w-full flex-1 overflow-y-auto py-2 px-1 sm:px-3 text-sm sm:text-base text-text leading-relaxed">
         {note.content}
       </div>
 
-      <div className="w-full h-[10%] flex flex-col items-end gap-2">
+      {/* Footer Actions */}
+      <div className="w-full pt-4 border-t border-primary/20 flex flex-col items-end gap-2">
         {generateError && (
-          <p className="text-red-500 text-sm">{generateError}</p>
+          <p className="text-red-500 text-xs sm:text-sm text-right">
+            {generateError}
+          </p>
         )}
         <button
-          className="btn"
+          className="btn flex items-center gap-2 w-full sm:w-auto justify-center px-4 py-2 text-sm sm:text-base"
           onClick={handleGenerateFlashcards}
           disabled={isGenerating}
         >
           <Sparkles className="inline" size={16} />
-          {isGenerating ? "Generating..." : "Generate flashcards"}
+          <span>{isGenerating ? "Generating..." : "Generate flashcards"}</span>
         </button>
       </div>
 
+      {/* Edit Modal */}
       {showModal && (
         <EditNote
           note={note}

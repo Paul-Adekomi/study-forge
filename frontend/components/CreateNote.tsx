@@ -1,11 +1,19 @@
+"use client";
+
 import { NotebookPen, Save, X } from "lucide-react";
 import { useState } from "react";
+
+type CreateNoteProps = {
+  showModal: boolean;
+  setShowModal: (show: boolean) => void;
+  onNoteCreated: (note: any) => void;
+};
 
 export default function CreateNote({
   showModal,
   setShowModal,
   onNoteCreated,
-}: any) {
+}: CreateNoteProps) {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [saving, setSaving] = useState(false);
@@ -46,44 +54,62 @@ export default function CreateNote({
       setContent("");
       setShowModal(false);
     } catch (err) {
-      console.error(err);
-      console.log("Failed to create note", err);
+      console.error("Failed to create note", err);
     } finally {
       setSaving(false);
     }
   }
+
   return (
-    <div className="w-full h-full z-40 absolute left-0 top-0 bg-surface/10 backdrop-blur-xs flex items-center justify-center">
-      <div className="w-[50%] bg-surface border border-primary/50 h-[65%] rounded-2xl overflow-hidden">
-        <div className="border-b border-primary/50 h-[10%] px-5 py-2 flex items-center justify-between">
+    <div
+      className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto"
+      onClick={() => setShowModal(false)}
+    >
+      <div
+        className="w-[95%] sm:w-[85%] md:w-[60%] lg:w-[50%] bg-surface border border-primary/50 h-auto max-h-[90vh] rounded-2xl overflow-hidden flex flex-col shadow-2xl"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Modal Header */}
+        <div className="border-b border-primary/50 px-4 sm:px-5 py-3 flex items-center justify-between shrink-0">
           <span className="flex items-center justify-center gap-2">
-            <NotebookPen className="inline text-primary" />
-            <span className="text-xl font-heading">Create New Note</span>
+            <NotebookPen className="inline text-primary shrink-0" size={20} />
+            <span className="text-lg sm:text-xl font-heading font-semibold text-text">
+              Create New Note
+            </span>
           </span>
           <button
             onClick={() => setShowModal(!showModal)}
-            className="Shover:text-primary cursor-pointer"
+            className="text-muted hover:text-primary cursor-pointer p-1"
             title="Close"
+            aria-label="Close modal"
           >
-            <X />
+            <X size={20} />
           </button>
         </div>
 
-        <div className="w-full h-[80%] p-6 gap-5">
-          <div className="w-full h-[20%] flex items-start justify-center flex-col gap-1">
-            <span className="font-heading text-muted">TITLE</span>
+        {/* Modal Form Body */}
+        <div className="w-full flex-1 p-4 sm:p-6 flex flex-col gap-4 overflow-y-auto">
+          {/* Title Input */}
+          <div className="w-full flex flex-col gap-1.5">
+            <label className="font-heading text-xs sm:text-sm text-muted uppercase tracking-wider">
+              Title
+            </label>
             <input
               type="text"
-              className="w-full h-32 border border-primary/50 outline-0 rounded-md px-3 bg-background"
-              placeholder="e.g, Cellular Respiration Summary"
+              className="w-full h-11 sm:h-12 border border-primary/50 outline-none rounded-md px-3 bg-background text-text text-sm sm:text-base focus:border-primary transition-colors"
+              placeholder="e.g., Cellular Respiration Summary"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
             />
           </div>
-          <div className="w-full h-[80%] flex items-start justify-center flex-col gap-1 pt-5">
-            <span className="font-heading text-muted">NOTE CONTENT</span>
+
+          {/* Content Textarea */}
+          <div className="w-full flex-1 flex flex-col gap-1.5 min-h-[160px]">
+            <label className="font-heading text-xs sm:text-sm text-muted uppercase tracking-wider">
+              Note Content
+            </label>
             <textarea
-              className="w-full h-[80%] border border-primary/50 bg-background outline-0 rounded-md p-3 resize-none"
+              className="w-full flex-1 border border-primary/50 bg-background outline-none rounded-md p-3 resize-none text-text text-sm sm:text-base focus:border-primary transition-colors min-h-[140px]"
               placeholder="Start typing your notes here..."
               value={content}
               onChange={(e) => setContent(e.target.value)}
@@ -91,19 +117,21 @@ export default function CreateNote({
           </div>
         </div>
 
-        <div className="h-[10%] px-5 pb-2 flex items-center justify-between">
+        {/* Modal Footer */}
+        <div className="border-t border-primary/20 px-4 sm:px-5 py-3 flex items-center justify-between shrink-0 bg-surface">
           <button
-            className="bg-surface border border-primary/50 px-5 py-1.5 text-primary cursor-pointer rounded-md duration-100 font-heading inline-block hover:bg-primary hover:text-background"
+            className="bg-surface border border-primary/50 px-4 py-2 text-primary cursor-pointer rounded-md text-sm sm:text-base duration-100 font-heading hover:bg-primary hover:text-background"
             onClick={() => setShowModal(false)}
           >
             Cancel
           </button>
           <button
-            className="bg-primary px-5 py-1.5 text-background cursor-pointer rounded-md transition-all duration-100 font-heading inline-block hover:bg-primary-hover"
+            className="bg-primary px-5 py-2 text-background cursor-pointer rounded-md transition-all duration-100 font-heading text-sm sm:text-base flex items-center gap-1.5 hover:bg-primary-hover disabled:opacity-50"
             onClick={handleCreateNote}
+            disabled={saving || !title.trim() || !content.trim()}
           >
-            <Save size={15} className="inline -translate-y-0.5" />{" "}
-            {saving ? "Saving..." : "Save"}
+            <Save size={16} className="inline -translate-y-0.5" />
+            <span>{saving ? "Saving..." : "Save"}</span>
           </button>
         </div>
       </div>

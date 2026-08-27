@@ -19,7 +19,6 @@ export default function FlashcardsPage() {
         return;
       }
 
-      // Otherwise fetch all flashcards from backend API (menu navigation)
       const token = localStorage.getItem("access_token");
       try {
         const res = await fetch("http://127.0.0.1:8000/flashcards", {
@@ -41,13 +40,19 @@ export default function FlashcardsPage() {
 
   if (loading) {
     return (
-      <div className="w-full h-full flex items-center justify-center">
-        <p className="text-muted">Loading flashcards...</p>
+      <div className="w-full min-h-[50vh] sm:min-h-screen flex items-center justify-center p-4">
+        <p className="text-muted text-sm sm:text-base animate-pulse">
+          Loading flashcards...
+        </p>
       </div>
     );
   }
 
   return (
-    <FlashcardView flashcards={flashcards} onClose={() => router.back()} />
+    <div className="w-full min-h-[calc(100vh-57px)] md:min-h-screen p-4 sm:p-6 flex flex-col items-center justify-center touch-pan-y overflow-x-hidden">
+      <div className="w-full max-w-4xl flex-1 flex flex-col justify-center">
+        <FlashcardView flashcards={flashcards} onClose={() => router.back()} />
+      </div>
+    </div>
   );
 }
