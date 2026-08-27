@@ -63,12 +63,15 @@ export default function Notes() {
     const token = localStorage.getItem("access_token");
 
     try {
-      const response = await fetch(`http://127.0.0.1:8000/notes/${noteId}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${token}`,
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/notes/${noteId}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         },
-      });
+      );
 
       if (!response.ok) {
         console.log("Failed to delete note");
