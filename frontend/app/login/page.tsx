@@ -44,7 +44,6 @@ export default function LoginIn() {
       setTimeout(() => {
         router.push("/dashboard");
       }, 2000);
-      console.log(data);
       setSuccessMessage("Login successful!");
 
       setUsername("");
