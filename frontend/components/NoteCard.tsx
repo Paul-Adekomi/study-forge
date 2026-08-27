@@ -61,7 +61,7 @@ export default function NoteCard({ note, onDelete, onSelect }: NoteCardProps) {
   }
 
   return (
-    <div className="note group border border-primary/50 rounded-xl bg-surface w-full h-auto min-h-[15rem] p-4 sm:p-5 flex flex-col justify-between cursor-pointer hover:border-primary/90 transition-colors relative">
+    <div className="note group border border-primary/50 rounded-xl bg-surface w-full h-auto min-h-60 p-4 sm:p-5 flex flex-col justify-between cursor-pointer hover:border-primary/90 transition-colors relative">
       {/* Main Card Content */}
       <div
         className="w-full flex-1 flex flex-col gap-2 mb-3"

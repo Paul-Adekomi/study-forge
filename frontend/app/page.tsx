@@ -8,6 +8,7 @@ export default function page() {
   return (
     <>
       <NavBar />
+      {/* Header/ Hero section */}
       <header className="w-full h-200 flex items-center justify-center flex-col pt-20 bg-background">
         <div className="md:w-[50%] w-full h-max flex items-center justify-center flex-col gap-5 md:p-0 px-5">
           <h1 className="md:text-7xl text-6xl font-heading font-bold md:text-left text-center">
@@ -39,7 +40,9 @@ export default function page() {
           </Link>
         </div>
       </header>
+      {/* Features & How It Works Section */}
       <section className="bg-background md:250 h-700 md:h-400 flex items-center justify-center gap-50 flex-col md:px-0 px-5">
+        {/* Features */}
         <div className="w-full flex flex-col items-center justify-center gap-10">
           <div className="flex items-center justify-center flex-col text-center">
             <h2 className="font-heading text-3xl font-bold">
@@ -49,7 +52,7 @@ export default function page() {
               Everything you need to master your material, without the clutter.
             </p>
           </div>
-
+          {/* Card container */}
           <div className="card_container w-full flex items-center justify-evenly flex-col md:flex-row flex-wrap md:gap-0 gap-6">
             <div className="card">
               <span>
@@ -85,7 +88,7 @@ export default function page() {
             </div>
           </div>
         </div>
-
+        {/* How it works */}
         <div className="w-full flex flex-col items-center justify-center gap-10">
           <div className="flex items-center justify-center flex-col text-center">
             <h2 className="font-heading text-3xl font-bold">
@@ -136,6 +139,7 @@ export default function page() {
         </div>
       </section>
 
+      {/* Footer */}
       <footer className="w-full h-max border-t border-gray-600 px-4 md:px-8 py-4 flex items-center md:justify-between justify-center flex-wrap bg-background z-50">
         <span className="flex items-center gap-2">
           <img

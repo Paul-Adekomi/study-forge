@@ -72,7 +72,7 @@ export default function NotePage({
     <div className="fixed inset-0 w-full h-screen bg-surface z-50 px-4 sm:px-8 py-6 sm:py-10 flex flex-col items-start justify-between gap-4 sm:gap-6 overflow-hidden">
       {/* Header Bar */}
       <div className="w-full flex flex-col-reverse sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-primary/20 pb-4">
-        <h1 className="text-2xl sm:text-4xl lg:text-5xl font-heading text-text break-words line-clamp-2 pr-2">
+        <h1 className="text-2xl sm:text-4xl lg:text-5xl font-heading text-text wrap-break-word line-clamp-2 pr-2">
           {note.title}
         </h1>
         <div className="w-full sm:w-auto flex items-center justify-between sm:justify-end gap-3 sm:gap-6">

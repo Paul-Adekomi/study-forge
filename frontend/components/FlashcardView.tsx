@@ -90,7 +90,7 @@ export default function FlashcardView({
 
       {/* Main Interactive Flashcard */}
       <div
-        className="flashcard bg-primary/20 w-[95%] sm:w-[80%] md:w-[65%] lg:w-[50%] h-[45vh] sm:h-[50vh] min-h-[260px] rounded-2xl sm:rounded-3xl border-primary border-2 overflow-hidden cursor-pointer shadow-lg transition-all"
+        className="flashcard bg-primary/20 w-[95%] sm:w-[80%] md:w-[65%] lg:w-[50%] h-[45vh] sm:h-[50vh] min-h-65 rounded-2xl sm:rounded-3xl border-primary border-2 overflow-hidden cursor-pointer shadow-lg transition-all"
         onClick={() => setRevealed(!revealed)}
       >
         <div

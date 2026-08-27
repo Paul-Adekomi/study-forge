@@ -109,7 +109,7 @@ export default function Page() {
             <span className="font-heading text-2xl sm:text-3xl font-bold text-text">
               {dailyGenerations}/10
             </span>
-            <div className="w-full max-w-[100px] h-2 my-1 border border-primary/30 rounded-2xl overflow-hidden">
+            <div className="w-full max-w-25 h-2 my-1 border border-primary/30 rounded-2xl overflow-hidden">
               <span
                 className="block h-full bg-primary transition-all duration-300"
                 style={{

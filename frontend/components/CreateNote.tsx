@@ -104,12 +104,12 @@ export default function CreateNote({
           </div>
 
           {/* Content Textarea */}
-          <div className="w-full flex-1 flex flex-col gap-1.5 min-h-[160px]">
+          <div className="w-full flex-1 flex flex-col gap-1.5 min-h-40">
             <label className="font-heading text-xs sm:text-sm text-muted uppercase tracking-wider">
               Note Content
             </label>
             <textarea
-              className="w-full flex-1 border border-primary/50 bg-background outline-none rounded-md p-3 resize-none text-text text-sm sm:text-base focus:border-primary transition-colors min-h-[140px]"
+              className="w-full flex-1 border border-primary/50 bg-background outline-none rounded-md p-3 resize-none text-text text-sm sm:text-base focus:border-primary transition-colors min-h-35"
               placeholder="Start typing your notes here..."
               value={content}
               onChange={(e) => setContent(e.target.value)}
