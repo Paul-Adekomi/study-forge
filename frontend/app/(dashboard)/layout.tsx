@@ -57,7 +57,7 @@ export default function DashboardLayout({
       {/* Sidebar */}
       <aside
         className={`
-          fixed md:static top-0 z-50 left-0 h-screen bg-surface border-r border-primary/50 py-7 flex items-start justify-start flex-col gap-10 z-50 transition-all duration-300
+          fixed md:static top-0 z-50 left-0 h-screen bg-surface border-r border-primary/50 py-7 flex items-start justify-start flex-col gap-10 transition-all duration-300
           ${isMobileOpen ? "translate-x-0 w-64" : "-translate-x-full md:translate-x-0"}
           ${isCollapsed ? "md:w-20" : "md:w-64"}
         `}
@@ -140,7 +140,7 @@ export default function DashboardLayout({
           </Link>
 
           <Link
-            href="/"
+            href="#"
             onClick={() => setIsMobileOpen(false)}
             className={`menu_item w-full flex items-center gap-3 px-6 py-2 ${
               pathname === "/study-sets" ? "active" : ""
@@ -154,7 +154,7 @@ export default function DashboardLayout({
           </Link>
 
           <Link
-            href="/"
+            href="#"
             onClick={() => setIsMobileOpen(false)}
             className={`menu_item w-full flex items-center gap-3 px-6 py-2 ${pathname === "/ai-helper" ? "active" : ""}`}
             title="AI Helper"
@@ -166,7 +166,7 @@ export default function DashboardLayout({
           </Link>
 
           <Link
-            href="/"
+            href="#"
             onClick={() => setIsMobileOpen(false)}
             className={`menu_item w-full flex items-center gap-3 px-6 py-2 ${pathname === "/settings" ? "active" : ""}`}
             title="Settings"
